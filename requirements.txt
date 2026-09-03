@@ -1,2 +1,6 @@
 streamlit
 openai
+anthropic
+google-genai
+requests
+beautifulsoup4
