@@ -34,11 +34,12 @@ summary_type = st.sidebar.selectbox(
 # via `st.secrets`, see https://docs.streamlit.io/develop/concepts/connections/secrets-management
 
 use_advanced = st.sidebar.checkbox("Use advanced model")
-Choose_llm = st.sidebar.selectbox("Choose LLM Provider", ("OpenAI", "Claude", "Gemini"))
+Choose_llm = st.sidebar.selectbox("Choose LLM Provider", ("OpenAI", "Claude", "Deepseek"))
 
 # - API keys -
 openai_api_key = st.secrets["My_newkey"]
 claude_api_key = st.secrets["My_newclaudekey"]
+Deep_api_key = st.secrets["My_Deepseek"]
 
 
 language = st.sidebar.selectbox('Output Language', ('English', 'French', 'Chinese'))
@@ -48,9 +49,18 @@ language = st.sidebar.selectbox('Output Language', ('English', 'French', 'Chines
 if Choose_llm == "OpenAI":
     client = OpenAI(api_key=openai_api_key)
     model_choice = "gpt-5" if use_advanced else "gpt-5-mini"
-else:  # Claude
-    client = Anthropic(api_key=claude_api_key)
-    model_choice = "claude-opus-4-1" if use_advanced else "claude-haiku-4-5"
+elif Choose_llm == "Claude": 
+# Claude
+    client = Anthropic( 
+        api_key=claude_api_key,
+        default_headers={"anthropic-workspace-id": "wrkspc_01JyhCQjT3t9iA63cBnWaxgU"})
+    model_choice = "claude-opus-5" if use_advanced else "claude-haiku-4-5-20251001"
+
+elif  Choose_llm == "Deepseek": 
+    # Deepseek
+    client = OpenAI(api_key=Deep_api_key, base_url="https://api.deepseek.com")
+else:
+    st.write("Please Select A model In The Nav Bar")
 
 # Main logic -
 if url and summary_type and language:
@@ -67,9 +77,9 @@ if url and summary_type and language:
                 messages=[{"role": "user", "content": prompt}],
                 stream=True,
             )
-            st.write_stream(stream)
-
-        elif Choose_llm == "Claude":
+            st.write_stream(stream) 
+            
+        elif Choose_llm == "Claude":    
             with client.messages.stream(
                 model=model_choice,
                 max_tokens=1024,
@@ -77,9 +87,14 @@ if url and summary_type and language:
             ) as stream:
                 st.write_stream(stream.text_stream)
 
-        else:  # Gemini
-            response = client.models.generate_content(
-                model=model_choice,
-                contents=prompt,
-            )
-            st.write(response.text)
+        elif Choose_llm == "Deepseek":
+            stream = client.chat.completions.create(
+            model=model_choice,
+            messages=[{"role": "user", "content": prompt}],
+            stream=True,)
+            st.write_stream(stream)
+        else:
+            st.write("Unnamed Model")
+
+
+    
