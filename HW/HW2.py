@@ -58,7 +58,11 @@ elif Choose_llm == "Claude":
 
 elif  Choose_llm == "Deepseek": 
     # Deepseek
-    client = OpenAI(api_key=Deep_api_key, base_url="https://api.deepseek.com")
+    client = OpenAI(
+    api_key=Deep_api_key,
+    base_url="https://api.deepseek.com"
+    )
+    model_choice = "deepseek-reasoner" if use_advanced else "deepseek-chat"
 else:
     st.write("Please Select A model In The Nav Bar")
 
