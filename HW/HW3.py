@@ -97,7 +97,7 @@ if prompt:
 
         with st.chat_message("assistant"):
             if choose_llm == "OpenAI":
-                client = OpenAI(api_key=st.secrets["openai_api_key"])
+                client = OpenAI(api_key=st.secrets["My_newkey"])
                 stream = client.chat.completions.create(
                     model=model_choice,
                     messages=(
@@ -109,7 +109,7 @@ if prompt:
                 response = st.write_stream(stream)
 
             else:  # Claude
-                client = Anthropic(api_key=st.secrets["claude_api_key"])
+                client = Anthropic(api_key=st.secrets["My_newclaudekey"])
                 # Claude takes "system" as a top-level param, not inside messages
                 with client.messages.stream(
                     model=model_choice,
