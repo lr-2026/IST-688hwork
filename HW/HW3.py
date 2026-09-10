@@ -32,7 +32,7 @@ use_advance = st.sidebar.checkbox("Use advanced model")
 
 # Verify these IDs against each provider's current model list before submitting.
 MODELS = {
-    "OpenAI": {False: "gpt-5.1-mini", True: "gpt-5.1"},
+    "OpenAI": {False: "gpt-5-mini", True: "gpt-5"},
     "Claude": {False: "claude-haiku-4-5-20251001", True: "claude-opus-5"},
 }
 model_choice = MODELS[choose_llm][use_advance]
