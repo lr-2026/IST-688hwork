@@ -4,3 +4,4 @@ anthropic
 google-genai
 requests
 beautifulsoup4
+PdfReader
