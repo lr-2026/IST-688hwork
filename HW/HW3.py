@@ -109,7 +109,8 @@ if prompt:
                 response = st.write_stream(stream)
 
             else:  # Claude
-                client = Anthropic(api_key=st.secrets["My_newclaudekey"])
+                client = Anthropic(api_key=st.secrets["My_newclaudekey"],
+                default_headers={"anthropic-workspace-id": "wrkspc_01JyhCQjT3t9iA63cBnWaxgU"})
                 # Claude takes "system" as a top-level param, not inside messages
                 with client.messages.stream(
                     model=model_choice,
@@ -118,6 +119,7 @@ if prompt:
                     messages=st.session_state.messages,
                 ) as stream:
                     response = st.write_stream(stream.text_stream)
+
 
         st.session_state.messages.append({"role": "assistant", "content": response})
         st.session_state.messages = st.session_state.messages[-MAX_MESSAGES:]
