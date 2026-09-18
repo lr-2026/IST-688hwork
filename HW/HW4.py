@@ -35,7 +35,7 @@ def extract_text_from_html(html_path):
     with open(html_path, "r", encoding="utf-8", errors="ignore") as f:
         soup = BeautifulSoup(f, "html.parser")
         for tag in soup(["script", "style"]):
-        tag.decompose()
+          tag.decompose()
  
     text = soup.get_text(separator="\n")
     # Collapse excess blank lines left over from stripped tags
