@@ -12,7 +12,7 @@ import chromadb
 from pathlib import Path
 from bs4 import BeautifulSoup
 
-st.title("HW4: iSchool Chatbot (RAG over HTML pages)")
+st.title("Syracuse Student Organization Chatbot)")
 
 
 # Create the OpenAI client once and store it in session_state
