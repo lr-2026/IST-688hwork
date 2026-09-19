@@ -10,7 +10,6 @@ except ImportError:
 from openai import OpenAI
 import chromadb
 from pathlib import Path
-from PyPDF2 import PdfReader
 from bs4 import BeautifulSoup
 
 st.title("HW4: iSchool Chatbot (RAG over HTML pages)")
