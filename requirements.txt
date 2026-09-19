@@ -5,3 +5,5 @@ google-genai
 requests
 beautifulsoup4
 chromadb
+pysqlite3-binary
+protobuf==3.20
