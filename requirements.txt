@@ -3,6 +3,7 @@ openai
 anthropic
 google-genai
 requests
+pypdf
 beautifulsoup4
 chromadb
 pysqlite3-binary
