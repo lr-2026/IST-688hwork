@@ -26,7 +26,7 @@ openai_api_key = st.text_input("OpenAI API Key", type="password")
 if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.", icon="🗝️")
 
-elif openai_api_key != st.secrets["my_key"]:
+elif openai_api_key != st.secrets["My_newkey"]:
     st.info("Wrong API Key. Please type the correct one.", icon="🗝️")
 
 else:
