@@ -12,6 +12,11 @@ import re
 import chromadb
 from openai import OpenAI
 
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent         
+CSV_PATH = ROOT / "Chroma_for_HW7" / "news.csv"
+DB_PATH = str(ROOT / "news_db")
 st.title("News Reporting Chatbot")
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
@@ -19,7 +24,7 @@ client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 # - Load and clean the CSV --
 @st.cache_data
 def load_news():
-    df = pd.read_csv("news.csv")
+    df = pd.read_csv(CSV_PATH)
     df["Document"] = df["Document"].fillna("").astype(str)
     # same article listed under several clients -> one row
     df = (df.groupby("URL", as_index=False)
@@ -33,7 +38,7 @@ def load_news():
 # --Build the vector DB once, then just load it ---
 @st.cache_resource
 def get_collection(_df):
-    chroma = chromadb.PersistentClient(path="news_db")   # saved to a folder
+    chroma = chromadb.PersistentClient(path=DB_PATH)   
     col = chroma.get_or_create_collection("news", metadata={"hnsw:space": "cosine"})
     if col.count() == 0:                                   # only the first time
         for i in range(0, len(_df), 100):
@@ -48,7 +53,7 @@ def get_collection(_df):
 
 news_df = load_news()
 collection = get_collection(news_df)
-st.sidebar.caption(f"{len(pd.read_csv('news.csv'))} rows in CSV → {len(news_df)} unique articles · {collection.count()} in vector DB")
+st.sidebar.caption(f"{len(pd.read_csv(CSV_PATH))} rows in CSV → {len(news_df)} unique articles · {collection.count()} in vector DB")
 
 
 def embed(text):
