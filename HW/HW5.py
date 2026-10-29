@@ -19,7 +19,7 @@ st.title("HW5 - Syracuse Student Organization Chatbot")
 # Create the OpenAI client once and store it in session_state
 
 if "client" not in st.session_state:
-    st.session_state.client = OpenAI(api_key=st.secrets["My_newkey"])
+    st.session_state.client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 client = st.session_state.client
 
 # Model selector mini vs regular

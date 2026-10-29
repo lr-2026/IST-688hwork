@@ -37,7 +37,7 @@ use_advanced = st.sidebar.checkbox("Use advanced model")
 Choose_llm = st.sidebar.selectbox("Choose LLM Provider", ("OpenAI", "Claude", "Deepseek"))
 
 # - API keys -
-openai_api_key = st.secrets["My_newkey"]
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 claude_api_key = st.secrets["My_newclaudekey"]
 Deep_api_key = st.secrets["My_Deepseek"]
 
